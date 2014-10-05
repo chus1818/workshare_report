@@ -1,0 +1,17 @@
+<% if flash[:errors] %>
+  <div class="alert alert-danger" role="alert">
+    <strong>Errors!</strong> <%= flash[:errors] %>
+  </div>
+<% end %>
+
+<div class='jumbotron'>
+  <h1>Workshare File Weights report</h1>
+  <p>A simple application that prints out a report detailing the "weights" of the files that a user has stored at <a href="http://www.workshare.com">Workshare</a>, categorized by file type.</p>
+
+  <%= form_tag(session_path, method: :post, class: 'form-signin') do %>
+    <h2 class='form-signin-heading'>Please sign in</h2>
+    <%= email_field_tag :email, nil, class: 'form-control', placeholder: 'Email address', required: true, autofocus: true %>
+    <%= password_field_tag :password, nil, class: 'form-control', placeholder: 'Password', required: true %>
+    <%= submit_tag :login, class: 'btn btn-lg btn-primary btn-block' %>
+  <% end %>
+</div>

@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: workshare_test_development
+
+test:
+  <<: *default
+  database: workshare_test_test
+
+production:
+  <<: *default
+  database: workshare_test_production
+  username: workshare_test
+  password: <%= ENV['WORKSHARE_TEST_DATABASE_PASSWORD'] %>
+

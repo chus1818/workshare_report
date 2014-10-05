@@ -1,0 +1,29 @@
+:types:
+  :song:
+    - mp3
+  :video:
+    - avi
+    - mp4
+    - mkv
+  :document:
+    - odt
+    - docx
+    - doc
+    - pdf
+  :text:
+    - txt
+  :binaries:
+    - bin
+
+:gravity:
+  :weight:
+    :song: 1.2 * size
+    :video: 1.4 * size
+    :document: 1.1 * size
+    :text: 100 + size
+    :binary: size
+    :other: size
+
+:size_normalization:
+  :divide: 1000000
+  :round: 2

@@ -1,0 +1,33 @@
+<div class='jumbotron'>
+  <h2>Workshare Report</h2>
+  <div class='table-container'>
+    <h2>Files</h2>
+    <table class='table'>
+      <tr>
+        <th>Amount</th>
+        <th>Type</th>
+        <th>Weight</th>
+      </tr>
+      <% @report[:groups].each do |file_group| %>
+        <tr>
+          <td><%= file_group[:amount] %></td>
+          <td><%= file_group[:type] %></td>
+          <td><%= file_group[:weight].round 2 %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+  <div class='subtable-container'>
+    <ul>
+      <li>
+        <span>Total weight: </span>
+        <span><%= @report[:total_weight] %></span>
+      </li>
+      <li>
+        <span>Additional gravity: </span>
+        <span><%= @report[:additional_gravity] %></span>
+      </li>
+    </ul>
+  </div>
+</div>

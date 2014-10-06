@@ -4,8 +4,8 @@ class GroupedFiles
   delegate :each, to: :collapsed_files
 
   def initialize(input, options = {})
-    @files         = Array(input)
-    @grouper       = options.fetch :by
+    @files   = Array(input)
+    @grouper = options.fetch :by
   end
 
 private

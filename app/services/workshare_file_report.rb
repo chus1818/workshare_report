@@ -1,8 +1,10 @@
 class WorkshareFileReport
-  attr_reader :files
+  attr_reader :files, :grouper, :weighter
 
-  def initialize(files)
+  def initialize(files, options = {})
     @files = files
+    @grouper  = options.fetch :grouper
+    @weighter = options.fetch :weighter
   end
 
   def groups
@@ -21,13 +23,5 @@ private
   
   def weighing_scale
     weighter.new files
-  end
-
-  def grouper
-    GroupedFiles
-  end
-
-  def weighter
-    WeighingScale
   end
 end

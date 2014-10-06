@@ -2,6 +2,7 @@ class ReportsController < ApplicationController
   before_filter :session_required
 
   def show
-    @report = WorkshareFileReport.new WorkshareFileRetrieval.files
+    options = { grouper: GroupedFiles, weighter: WeighingScale }
+    @report = WorkshareFileReport.new WorkshareFileRetrieval.files, options
   end
 end

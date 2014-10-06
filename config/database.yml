@@ -1,7 +1,7 @@
 default: &default
-  adapter: postgresql
-  encoding: unicode
+  adapter: sqlite3
   pool: 5
+  timeout: 5000
 
 development:
   <<: *default
@@ -12,7 +12,9 @@ test:
   database: workshare_test_test
 
 production:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
   database: workshare_test_production
   username: workshare_test
   password: <%= ENV['WORKSHARE_TEST_DATABASE_PASSWORD'] %>

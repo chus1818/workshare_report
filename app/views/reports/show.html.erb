@@ -8,11 +8,11 @@
         <th>Type</th>
         <th>Weight</th>
       </tr>
-      <% @report[:groups].each do |file_group| %>
+      <% @report.groups.each do |file_group| %>
         <tr>
           <td><%= file_group[:amount] %></td>
           <td><%= file_group[:type] %></td>
-          <td><%= file_group[:weight].round 2 %></td>
+          <td><%= format_as_weight file_group[:weight] %></td>
         </tr>
       <% end %>
     </table>
@@ -22,11 +22,11 @@
     <ul>
       <li>
         <span>Total weight: </span>
-        <span><%= @report[:total_weight] %></span>
+        <span><%= format_as_weight @report.total_weight %></span>
       </li>
       <li>
         <span>Additional gravity: </span>
-        <span><%= @report[:additional_gravity] %></span>
+        <span><%= format_as_weight @report.additional_gravity %></span>
       </li>
     </ul>
   </div>

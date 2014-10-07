@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+private
+
   def current_session
     session[:credentials]
   end
@@ -9,8 +11,6 @@ class ApplicationController < ActionController::Base
   def set_current_session(value)
     session[:credentials] = value
   end
-
-private
 
   def session_required
     unless current_session

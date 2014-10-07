@@ -41,3 +41,7 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 end
+
+include WorkshareClientHelper
+Workshare::Client.config api_key: Rails.application.secrets.workshare_api_key, 
+                             api_host: 'https://api.workshare.com'

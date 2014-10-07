@@ -1,12 +1,16 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-private
-
   def current_session
-    @current_session ||= Workshare::Client.default_cookies[:device_credentials]
+    session[:credentials]
   end
   helper_method :current_session
+
+  def set_current_session(value)
+    session[:credentials] = value
+  end
+
+private
 
   def session_required
     unless current_session

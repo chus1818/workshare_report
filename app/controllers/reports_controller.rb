@@ -3,6 +3,8 @@ class ReportsController < ApplicationController
 
   def show
     options = { grouper: GroupedFiles, weighter: WeighingScale }
-    @report = WorkshareFileReport.new WorkshareFileRetrieval.files, options
+    files   = WorkshareFileRetrieval.files current_session
+
+    @report = WorkshareFileReport.new files, options
   end
 end

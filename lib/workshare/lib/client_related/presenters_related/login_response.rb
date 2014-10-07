@@ -2,14 +2,19 @@ module Workshare
   module Client
     module Presenters
       class LoginResponse
-        attr_reader :raw
+        attr_reader :body, :headers
 
-        def initialize(raw)
-          @raw = clean(raw).symbolize_keys
+        def initialize(response)
+          @body    = clean(response).symbolize_keys
+          @headers = response.headers
+        end
+
+        def access_cookies
+          headers["set-cookie"]
         end
 
         def has_error_code?
-          raw[:error_code].present?
+          body[:error_code].present?
         end
 
       private
@@ -17,8 +22,8 @@ module Workshare
         # There's a bug in the API: for wrong credentials it
         # returns the errors hash inside an array of only one
         # element.
-        def clean(raw)
-          [raw].flatten[0]
+        def clean(response)
+          [response].flatten[0].to_h
         end
       end
     end

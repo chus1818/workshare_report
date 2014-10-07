@@ -1,10 +1,5 @@
 class Authentication
-  attr_reader :credentials, :engine, :errors
-
-  def self.deauthenticate
-    # Refactor that
-    Workshare::Client.logout
-  end
+  attr_reader :credentials, :engine, :errors, :cookies
 
   def initialize(credentials, engine = Workshare::Client)
     @credentials = credentials
@@ -13,8 +8,8 @@ class Authentication
   end
 
   def perform
-    errors.remove :unperformed_authentication
-    errors.add :wrong_credentials if engine.login(credentials).has_error_code? 
+    errors.remove :unperformed_authentication    
+    errors.add :wrong_credentials if login.has_error_code? 
     self
   rescue => e
     Rails.logger.error "[ERROR] Authentication Unexpected: #{e.message}\n #{e.backtrace}"
@@ -24,6 +19,16 @@ class Authentication
 
   def success?
     errors.empty?
+  end
+
+  def access_cookies
+    login.access_cookies if success?
+  end
+
+private
+
+  def login
+    @login ||= engine.login credentials
   end
 end
 

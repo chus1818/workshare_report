@@ -1,20 +1,36 @@
 require 'rails_helper'
 
 describe WorkshareFileRetrieval do
-  before { allow(Workshare::Client).to receive(:files).and_return(file_data_array) }
-  let(:file_data_array) { [file_data_1, file_data_2, file_data_3] }
-  let(:file_data_1) { {} }
-  let(:file_data_2) { {} }
-  let(:file_data_3) { {} }
+  before do 
+    allow(Workshare::Client).to receive(:files).and_return(file_response)
+    allow(file_response).to receive(:has_error_code?).and_return(credentials_error)
+  end
+  let(:file_response) { double }
+  let(:credentials_error) { true }
 
   describe "self.files" do
-    it "returns an array of presented files" do
-      file_data_array.each.with_index do |file, i|
-        expect(WorkshareFileRetrieval::File).to receive(:new).with(file).
-                                                and_return("file_#{i+1}".to_sym)
-      end
+    context "with valid credentials" do 
+      let(:file_response) { [file_data_1, file_data_2, file_data_3] }
+      let(:file_data_1) { {} }
+      let(:file_data_2) { {} }
+      let(:file_data_3) { {} }
+      let(:credentials_error) { false }
+      
+      it "returns an array of presented files" do
+        file_response.each.with_index do |file, i|
+          expect(WorkshareFileRetrieval::File).to receive(:new).with(file).
+                                                  and_return("file_#{i+1}".to_sym)
+        end
 
-      expect(WorkshareFileRetrieval.files).to eq [:file_1, :file_2, :file_3]
+        expect(WorkshareFileRetrieval.files('credentials')).to eq [:file_1, :file_2, :file_3]
+      end
+    end
+
+    context "with invalid credentials" do
+      it "raises an invalid credentials error" do
+        expect{WorkshareFileRetrieval.files('credentials') }.
+          to raise_error(WorkshareFileRetrieval::InvalidSessionError)
+      end
     end
   end
 end

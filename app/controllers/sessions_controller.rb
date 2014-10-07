@@ -1,11 +1,13 @@
 class SessionsController < ApplicationController
   def new
+    redirect_to report_path if current_session
   end
 
   def create
     authentication = Authentication.new(session_params)
 
     if authentication.perform.success?
+      set_current_session authentication.access_cookies
       redirect_to report_path
     else
       redirect_to new_session_path, flash: { errors: authentication.errors.to_s }
@@ -13,7 +15,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    Authentication.deauthenticate
+    set_current_session nil
     redirect_to root_path
   end
 

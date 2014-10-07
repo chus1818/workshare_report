@@ -1,6 +1,9 @@
 class WorkshareFileRetrieval
-  def self.files
-    Workshare::Client.files.map { |file| File.new file }
+  def self.files(session)
+    files = Workshare::Client.files(session)
+    raise InvalidSessionError if files.has_error_code?
+    
+    files.map { |file| File.new file }
   end
 
   class File < SimpleDelegator
@@ -34,5 +37,8 @@ class WorkshareFileRetrieval
     def weight_operation
       config.weights[type]
     end
-  end  
+  end
+
+  class InvalidSessionError < StandardError
+  end
 end

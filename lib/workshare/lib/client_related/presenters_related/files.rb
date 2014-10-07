@@ -4,19 +4,20 @@ module Workshare
       class Files
         include Enumerable
 
-        attr_reader :raw
+        attr_reader :raw, :body
         delegate :each, to: :elements
 
         def initialize(raw)
-          @raw = raw.normalize
+          @raw  = raw.normalize
+          @body = raw.symbolize_keys
         end
 
         def elements
           raw_elements
         end
 
-        def pagination
-          raw[:pagination]
+        def has_error_code?
+          body[:error_code].present?
         end
 
       private

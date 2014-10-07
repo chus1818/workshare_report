@@ -15,7 +15,6 @@ File types are Songs, Videos, Documents (office, openoffice,...), Text, Binaries
 
 * Get the repo
 * Bundle it
-* Launch migrations
 * Start the web server
 
 ## Comments
